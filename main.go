@@ -4,7 +4,6 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/hero"
-	"grpc-demo/config"
 	"grpc-demo/core/cache"
 	viewbase "grpc-demo/core/view"
 	"grpc-demo/models/db"
@@ -25,6 +24,7 @@ func initRouter(app *iris.Application) {
 	views.RegisterCourseRouters(app)
 	views.RegisterCourseTagRouters(app)
 	views.RegisterCourseApplyRouters(app)
+	views.RegisterMsetRouters(app)
 }
 
 func main() {
@@ -35,7 +35,6 @@ func main() {
 	// 注册路由
 	initRouter(app)
 	// 初始化配置
-	config.InitConfig()
 	utils.InitGlobal()
 	// 初始化数据库
 	db.InitDB()
@@ -46,5 +45,4 @@ func main() {
 	//queue.InitTaskQueue()
 	// 启动系统
 	app.Run(iris.Addr(":80"), iris.WithoutServerError(iris.ErrServerClosed))
-
 }

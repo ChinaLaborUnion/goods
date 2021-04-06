@@ -1,15 +1,14 @@
 package utils
 
 import (
-	"encoding/json"
-	"grpc-demo/config"
+	"fmt"
+	"gopkg.in/ini.v1"
 	"grpc-demo/models"
-
 )
 
+const filename = "conf.ini"
 var GlobalConfig models.SystemConfiguration
-var tempConfig models.SystemConfiguration
-
 func InitGlobal() {
-	json.Unmarshal(config.Config(),&GlobalConfig)
+	_ = ini.MapTo(&GlobalConfig, filename)
+	fmt.Printf("%#v\n",GlobalConfig)
 }

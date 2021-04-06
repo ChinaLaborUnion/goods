@@ -52,6 +52,7 @@ require (
 	golang.org/x/sys v0.0.0-20201126233918-771906719818 // indirect
 	google.golang.org/grpc v1.29.1
 	google.golang.org/protobuf v1.25.0
+	gopkg.in/ini.v1 v1.62.0
 	moul.io/http2curl v1.0.0 // indirect
 )
 

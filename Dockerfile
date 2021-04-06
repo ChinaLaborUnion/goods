@@ -6,6 +6,7 @@ RUN apk update --no-cache
 
 RUN mkdir /main
 COPY main /main/
+COPY conf.ini /main/
 
 WORKDIR /main
 ENTRYPOINT ["./main"]

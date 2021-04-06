@@ -195,3 +195,4 @@ func (d *driver) GetMany(table string, ids []interface{}, target interface{}, db
 	}
 	return data
 }
+

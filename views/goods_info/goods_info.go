@@ -340,7 +340,7 @@ func DeleteGoods(ctx iris.Context, auth authbase.AuthAuthorization, gid int) {
 }
 
 func ListGoods(ctx iris.Context, auth authbase.AuthAuthorization) {
-	auth.CheckLogin()
+	//auth.CheckLogin()
 
 	var lists []struct {
 		Id         int   `json:"id"`
@@ -446,7 +446,7 @@ func ListGoods(ctx iris.Context, auth authbase.AuthAuthorization) {
 }
 
 func MgetGoods(ctx iris.Context, auth authbase.AuthAuthorization) {
-	auth.CheckLogin()
+	//auth.CheckLogin()
 
 	params := paramsUtils.NewParamsParser(paramsUtils.RequestJsonInterface(ctx))
 	ids := params.List("ids", "id列表")

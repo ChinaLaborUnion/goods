@@ -1,11 +1,7 @@
 package hash
 
 import (
-	"crypto/hmac"
-	"crypto/sha256"
-	"grpc-demo/utils"
 	"encoding/base64"
-	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"math/rand"
@@ -25,9 +21,10 @@ func PasswordSignature(pwd string) string {
 
 // 加密字符串
 func encryptionString(payloadString string) string {
-	ghmac := hmac.New(sha256.New, []byte(utils.GlobalConfig.Server.Salt))
-	ghmac.Write([]byte(payloadString + utils.GlobalConfig.Server.Salt))
-	return hex.EncodeToString(ghmac.Sum([]byte(nil)))
+	//ghmac := hmac.New(sha256.New, []byte(utils.GlobalConfig.Server.Salt))
+	//ghmac.Write([]byte(payloadString + utils.GlobalConfig.Server.Salt))
+	//return hex.EncodeToString(ghmac.Sum([]byte(nil)))
+	return ""
 }
 
 // 生成token

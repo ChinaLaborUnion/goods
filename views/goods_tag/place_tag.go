@@ -10,7 +10,7 @@ import (
 )
 
 func CreatePlaceTag(ctx iris.Context, auth authbase.AuthAuthorization){
-	auth.CheckAdmin()
+	//auth.CheckAdmin()
 
 	params := paramsUtils.NewParamsParser(paramsUtils.RequestJsonInterface(ctx))
 	place := params.Str("place","属地")
@@ -27,7 +27,7 @@ func CreatePlaceTag(ctx iris.Context, auth authbase.AuthAuthorization){
 }
 
 func PutPlaceTag(ctx iris.Context, auth authbase.AuthAuthorization,pid int){
-	auth.CheckAdmin()
+	//auth.CheckAdmin()
 
 	var tag db.PlaceTag
 	if err := db.Driver.GetOne("place_tag",pid,&tag);err != nil{
@@ -46,7 +46,7 @@ func PutPlaceTag(ctx iris.Context, auth authbase.AuthAuthorization,pid int){
 }
 
 func DeletePlaceTag(ctx iris.Context, auth authbase.AuthAuthorization,pid int){
-	auth.CheckAdmin()
+	//auth.CheckAdmin()
 
 	var tag db.PlaceTag
 	if err := db.Driver.GetOne("place_tag",pid,&tag);err == nil{
@@ -61,7 +61,7 @@ func DeletePlaceTag(ctx iris.Context, auth authbase.AuthAuthorization,pid int){
 }
 
 func ListPlaceTag(ctx iris.Context, auth authbase.AuthAuthorization){
-	auth.CheckLogin()
+	//auth.CheckLogin()
 
 	var lists []struct {
 		Id         int   `json:"id"`
@@ -85,7 +85,7 @@ func ListPlaceTag(ctx iris.Context, auth authbase.AuthAuthorization){
 }
 
 func MgetPlaceTag(ctx iris.Context, auth authbase.AuthAuthorization){
-	auth.CheckLogin()
+	//auth.CheckLogin()
 
 	params := paramsUtils.NewParamsParser(paramsUtils.RequestJsonInterface(ctx))
 	ids := params.List("ids", "id列表")

@@ -9,10 +9,10 @@ import (
 // 获取七牛上传凭证
 func GetUploadToken() string {
 	putPolicy := storage.PutPolicy{
-		Scope:   utils.GlobalConfig.QiNiu.Bucket,
-		Expires: utils.GlobalConfig.QiNiu.Expires,
+		Scope:   utils.GlobalConfig.Qiniu.Bucket,
+		Expires: utils.GlobalConfig.Qiniu.Expires,
 	}
-	mac := qbox.NewMac(utils.GlobalConfig.QiNiu.AccessKey, utils.GlobalConfig.QiNiu.SecretKey)
+	mac := qbox.NewMac(utils.GlobalConfig.Qiniu.AccessKey, utils.GlobalConfig.Qiniu.SecretKey)
 	upToken := putPolicy.UploadToken(mac)
 	return upToken
 }

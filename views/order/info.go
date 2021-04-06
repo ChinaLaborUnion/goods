@@ -30,7 +30,7 @@ var orderDetailField = []string{
 
 //创建订单
 func CreateOrder(ctx iris.Context, auth authbase.AuthAuthorization) {
-	auth.CheckLogin()
+	//auth.CheckLogin()
 
 	params := paramsUtils.NewParamsParser(paramsUtils.RequestJsonInterface(ctx))
 	var addressId int
@@ -120,10 +120,10 @@ func CreateOrder(ctx iris.Context, auth authbase.AuthAuthorization) {
 					if delivery == goodsInfoEnum.GetWayExpressage {
 
 						addressId = params.Int("address_id", "地址id")
-						var address db.Address
-						if err := db.Driver.Where("account_id = ? and id = ?", auth.AccountModel().Id, addressId).First(&address).Error; err != nil {
-							panic(orderException.AddressIsNotExsit())
-						}
+						//var address db.Address
+						//if err := db.Driver.Where("account_id = ? and id = ?", auth.AccountModel().Id, addressId).First(&address).Error; err != nil {
+						//	panic(orderException.AddressIsNotExsit())
+						//}
 
 						//子数值计算
 						childCoupon1 += (s.Price - s.ReducedPrice) * goodsTotal
@@ -140,10 +140,10 @@ func CreateOrder(ctx iris.Context, auth authbase.AuthAuthorization) {
 					} else if delivery == goodsInfoEnum.GetWaySameCity {
 
 						addressId = params.Int("address_id", "地址id")
-						var address db.Address
-						if err := db.Driver.Where("account_id = ? and id = ?", auth.AccountModel().Id, addressId).First(&address).Error; err != nil {
-							panic(orderException.AddressIsNotExsit())
-						}
+						//var address db.Address
+						//if err := db.Driver.Where("account_id = ? and id = ?", auth.AccountModel().Id, addressId).First(&address).Error; err != nil {
+						//	panic(orderException.AddressIsNotExsit())
+						//}
 
 						//子数值计算
 						childCoupon2 += (s.Price - s.ReducedPrice) * goodsTotal
@@ -211,10 +211,10 @@ func CreateOrder(ctx iris.Context, auth authbase.AuthAuthorization) {
 					//订单分单
 					if delivery == goodsInfoEnum.GetWayExpressage {
 						addressId = params.Int("address_id", "地址id")
-						var address db.Address
-						if err := db.Driver.Where("account_id = ? and id = ?", auth.AccountModel().Id, addressId).First(&address).Error; err != nil {
-							panic(orderException.AddressIsNotExsit())
-						}
+						//var address db.Address
+						//if err := db.Driver.Where("account_id = ? and id = ?", auth.AccountModel().Id, addressId).First(&address).Error; err != nil {
+						//	panic(orderException.AddressIsNotExsit())
+						//}
 
 						//子数值计算
 						childGoodsAmount1 += s.Price * goodsTotal
@@ -227,10 +227,10 @@ func CreateOrder(ctx iris.Context, auth authbase.AuthAuthorization) {
 						expressage = append(expressage, gd)
 					} else if delivery == goodsInfoEnum.GetWaySameCity {
 						addressId = params.Int("address_id", "地址id")
-						var address db.Address
-						if err := db.Driver.Where("account_id = ? and id = ?", auth.AccountModel().Id, addressId).First(&address).Error; err != nil {
-							panic(orderException.AddressIsNotExsit())
-						}
+						//var address db.Address
+						//if err := db.Driver.Where("account_id = ? and id = ?", auth.AccountModel().Id, addressId).First(&address).Error; err != nil {
+						//	panic(orderException.AddressIsNotExsit())
+						//}
 
 						//子数值计算
 						childGoodsAmount2 += s.Price * goodsTotal
@@ -301,7 +301,8 @@ func CreateOrder(ctx iris.Context, auth authbase.AuthAuthorization) {
 	//创建总订单
 	order := db.TestOrder{
 		PayOrNot:         false,
-		AccountID:        auth.AccountModel().Id,
+		//AccountID:        auth.AccountModel().Id,
+		AccountID:params.Int("account_id","account_id"),
 		AddressID:        addressId,
 		TotalCoupon:      totalCoupon,
 		TotalExpFare:     totalExpFare,
@@ -328,7 +329,8 @@ func CreateOrder(ctx iris.Context, auth authbase.AuthAuthorization) {
 	var childOrder1 db.TestChildOrder
 	if len(expressage) > 0 {
 		childOrder1 = db.TestChildOrder{
-			AccountID:        auth.AccountModel().Id,
+			//AccountID:        auth.AccountModel().Id,
+			AccountID:params.Int("account_id","account_id"),
 			AddressID:        addressId,
 			OrderStatus:      orderEnums.SUBMIT,
 			OrderNum:         strconv.FormatInt(order.CreateTime, 10) + "-" + hash.GetRandomString(8),
@@ -348,7 +350,8 @@ func CreateOrder(ctx iris.Context, auth authbase.AuthAuthorization) {
 	var childOrder2 db.TestChildOrder
 	if len(sameCity) > 0 {
 		childOrder2 = db.TestChildOrder{
-			AccountID:        auth.AccountModel().Id,
+			//AccountID:        auth.AccountModel().Id,
+			AccountID:params.Int("account_id","account_id"),
 			AddressID:        addressId,
 			OrderStatus:      orderEnums.SUBMIT,
 			OrderNum:         strconv.FormatInt(order.CreateTime, 10) + "-" + hash.GetRandomString(8),
@@ -368,7 +371,8 @@ func CreateOrder(ctx iris.Context, auth authbase.AuthAuthorization) {
 	var childOrder3 db.TestChildOrder
 	if len(self) > 0 {
 		childOrder3 = db.TestChildOrder{
-			AccountID:        auth.AccountModel().Id,
+			//AccountID:        auth.AccountModel().Id,
+			AccountID:params.Int("account_id","account_id"),
 			AddressID:        addressId,
 			OrderStatus:      orderEnums.SUBMIT,
 			OrderNum:         strconv.FormatInt(order.CreateTime, 10) + "-" + hash.GetRandomString(8),
@@ -394,7 +398,8 @@ func CreateOrder(ctx iris.Context, auth authbase.AuthAuthorization) {
 	if len(expressage) > 0 {
 		for _, _expressage := range expressage {
 			sql = sql.Values(
-				auth.AccountModel().Id,
+				//auth.AccountModel().Id,
+				params.Int("account_id","account_id"),
 				childOrder1.ID,
 				order.ID,
 				_expressage["goods_id"],
@@ -415,7 +420,8 @@ func CreateOrder(ctx iris.Context, auth authbase.AuthAuthorization) {
 	if len(sameCity) > 0 {
 		for _, _sameCity := range sameCity {
 			sql = sql.Values(
-				auth.AccountModel().Id,
+				//auth.AccountModel().Id,
+				params.Int("account_id","account_id"),
 				childOrder2.ID,
 				order.ID,
 				_sameCity["goods_id"],
@@ -436,7 +442,8 @@ func CreateOrder(ctx iris.Context, auth authbase.AuthAuthorization) {
 	if len(self) > 0 {
 		for _, _self := range self {
 			sql = sql.Values(
-				auth.AccountModel().Id,
+				//auth.AccountModel().Id,
+				params.Int("account_id","account_id"),
 				childOrder3.ID,
 				order.ID,
 				_self["goods_id"],
